@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component
+//从application.yml中读取前缀为redis的property
 @ConfigurationProperties(prefix = "redis")
 public class RedisConfig {
     private String host;

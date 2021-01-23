@@ -1,14 +1,32 @@
 package com.yang.redis;
 
 public abstract class BasePrefix implements KeyPrefix {
+    /**
+     * 默认0代表永不过期
+     *
+     * @return
+     */
+    private int expireSeconds;
+    private String prefix;
+
+    public BasePrefix(String prefix) {//0代表永不过期
+        this(0, prefix);
+    }
+
+    public BasePrefix(int expireSeconds, String prefix) {
+        this.expireSeconds = expireSeconds;
+        this.prefix = prefix;
+    }
 
     @Override
     public int expireSeconds() {
-        return 0;
+        return expireSeconds;
     }
 
     @Override
     public String getPrefix() {
-        return null;
+        //获取类名
+        String className = this.getClass().getSimpleName();
+        return className + ":" + prefix;
     }
 }

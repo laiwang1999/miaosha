@@ -4,6 +4,7 @@ import com.yang.pojo.CodeMsg;
 import com.yang.pojo.Result;
 import com.yang.pojo.User;
 import com.yang.redis.RedisService;
+import com.yang.redis.UserKey;
 import com.yang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ public class DemoController {
     UserService userService;
     @Autowired
     RedisService redisService;
+
     @GetMapping("/hello")
     @ResponseBody
     public Result<String> hello() {
@@ -44,22 +46,23 @@ public class DemoController {
 
     @RequestMapping("/db/tx")
     @ResponseBody
-    public Result<Boolean> dbTX(){
+    public Result<Boolean> dbTX() {
         userService.tx();
         return Result.success(true);
     }
 
     @RequestMapping("/redis/get")
     @ResponseBody
-    public Result<Long> redisGet(){
-        Long v1 = redisService.get("key1",Long.class);
-        return Result.success(v1);
+    public Result<User> redisGet() {
+        User user = redisService.get(UserKey.getById,""+1, User.class);
+        return Result.success(user);
     }
+
     @RequestMapping("redis/set")
     @ResponseBody
-    public Result<String> redisSet(){
-        boolean ret = redisService.set("key2", "hello redis");
-        String str =  redisService.get("key2",String.class);
-        return Result.success(str);
+    public Result<Boolean> redisSet() {
+        User user = new User(1,"11");
+        boolean ret = redisService.set(UserKey.getById,""+1, user);//UserKey:id1
+        return Result.success(ret);
     }
 }
