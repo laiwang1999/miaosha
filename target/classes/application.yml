@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+  thymeleaf:
+    cache: false
+    encoding: utf-8
+    enabled: true
+    mode: html5
+    prefix: classpath:/templates/
+    suffix: .html
+  datasource:
+    url: jdbc:mysql://localhost:3306/miaosha?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT1FROMDUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall,log4j
+    logSlowSql: true
+
+
+mybatis:
+  type-aliases-package: com.yang.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 3000
+  mapper-locations: classpath:/mapper/*.xml
+# redis
+redis:  # redis配置
+  host: 116.62.121.124
+  port: 6379
+  timeout: 3
+  password: 123456
+  poolMaxTotal: 10
+  poplMaxIdle: 10
+  pollMaxWait: 3
