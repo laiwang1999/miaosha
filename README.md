@@ -1,3 +1,4 @@
+[toc]
 # 环境搭建
 ## 项目集成MyBatis
 ## 项目集成Redis
