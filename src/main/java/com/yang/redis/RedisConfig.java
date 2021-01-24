@@ -4,6 +4,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
+/**
+ * Redis需要参数：从application中读取
+ */
 @Component
 //从application.yml中读取前缀为redis的property
 @ConfigurationProperties(prefix = "redis")

@@ -1,15 +1,11 @@
 package com.yang.redis;
 
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
-import java.security.Key;
 
 @Service
 public class RedisService {
@@ -18,11 +14,12 @@ public class RedisService {
 
     /**
      * 得到一个键的值
-     * @param prefix
-     * @param key
-     * @param clazz
-     * @param <T>
-     * @return
+     *
+     * @param prefix 前缀
+     * @param key    键
+     * @param clazz  得到值的对象类型
+     * @param <T>    值的对象类型
+     * @return 返回一个T对象（值）
      */
     public <T> T get(KeyPrefix prefix, String key, Class<T> clazz) {
         Jedis jedis = null;
@@ -40,11 +37,12 @@ public class RedisService {
 
     /**
      * set一个键值对
-     * @param prefix
-     * @param key
-     * @param value
-     * @param <T>
-     * @return
+     *
+     * @param prefix 前缀
+     * @param key    键
+     * @param value  值
+     * @param <T>    值的对象类型
+     * @return 返回一个boolean类型，代表成功或失败
      */
     public <T> boolean set(KeyPrefix prefix, String key, T value) {
         Jedis jedis = null;
@@ -72,9 +70,10 @@ public class RedisService {
 
     /**
      * 对象转为字符串
-     * @param value
-     * @param <T>
-     * @return
+     *
+     * @param value Bean对象
+     * @param <T>   需要转化的Bean对象类型
+     * @return 返回对象转化后的字符串
      */
     private <T> String beanToString(T value) {
         if (value == null) {
@@ -96,9 +95,9 @@ public class RedisService {
     /**
      * 把字符串转化为一个bean对象
      *
-     * @param str
-     * @param <T>
-     * @return
+     * @param str 字符串值
+     * @param <T> 泛型类型，Bean
+     * @return 返回一个Bean，
      */
     @SuppressWarnings("unchecked")
     private <T> T StringToBean(String str, Class<T> clazz) {
@@ -118,7 +117,8 @@ public class RedisService {
 
     /**
      * 资源释放
-     * @param jedis
+     *
+     * @param jedis 传入的jedis对象
      */
     private void returnToPool(Jedis jedis) {
         if (jedis != null) {
@@ -129,12 +129,12 @@ public class RedisService {
 
     /**
      * 判断一个键是否存在
-     * @param prefix
-     * @param key
-     * @param <T>
-     * @return
+     *
+     * @param prefix 前缀
+     * @param key    键
+     * @return 返回一个boolean类型，存在或不存在
      */
-    public <T> boolean exists(KeyPrefix prefix, String key) {
+    public boolean exists(KeyPrefix prefix, String key) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -147,12 +147,12 @@ public class RedisService {
 
     /**
      * 执行原子加一操作
-     * @param prefix
-     * @param key
-     * @param <T>
-     * @return
+     *
+     * @param prefix 前缀
+     * @param key    键
+     * @return 返回原来的值的原子加一
      */
-    public <T> Long incr(KeyPrefix prefix, String key) {
+    public Long incr(KeyPrefix prefix, String key) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -166,10 +166,11 @@ public class RedisService {
 
     /**
      * 执行原子减一操作
-     * @param prefix
-     * @param key
-     * @param <T>
-     * @return
+     *
+     * @param prefix 前缀
+     * @param key    键
+     * @param <T>    无意义
+     * @return 返回原子减一后的结果
      */
     public <T> Long decr(KeyPrefix prefix, String key) {
         Jedis jedis = null;

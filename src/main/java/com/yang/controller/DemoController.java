@@ -51,18 +51,24 @@ public class DemoController {
         return Result.success(true);
     }
 
+    /**
+     * @return 返回一个User对象
+     */
     @RequestMapping("/redis/get")
     @ResponseBody
     public Result<User> redisGet() {
-        User user = redisService.get(UserKey.getById,""+1, User.class);
+        User user = redisService.get(UserKey.getById, "" + 1, User.class);
         return Result.success(user);
     }
 
+    /**
+     * @return 返回一个boolean，代表成功失败
+     */
     @RequestMapping("redis/set")
     @ResponseBody
     public Result<Boolean> redisSet() {
-        User user = new User(1,"11");
-        boolean ret = redisService.set(UserKey.getById,""+1, user);//UserKey:id1
+        User user = new User(1, "11");
+        boolean ret = redisService.set(UserKey.getById, "" + 1, user);//UserKey:id1
         return Result.success(ret);
     }
 }
