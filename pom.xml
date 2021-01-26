@@ -80,6 +80,11 @@
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf</artifactId>
 		</dependency>
+		<!-- JSR303依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

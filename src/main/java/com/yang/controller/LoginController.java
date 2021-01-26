@@ -14,6 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -39,29 +42,11 @@ public class LoginController {
      */
     @RequestMapping("do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(LoginVo loginVo) {
+    public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {
         log.info(loginVo.toString());
-        //参数校验
-        String passInput = loginVo.getPassword();
-        String mobile = loginVo.getMobile();
-        //密码校验
-        if(StringUtils.isNullOrEmpty(passInput)){
-            return Result.error(CodeMsg.PASSWORD_EMPTY);
-        }
-        //手机号校验
-        if(StringUtils.isNullOrEmpty(mobile)){
-            return Result.error(CodeMsg.MOBILE_EMPTY);
-        }
-        if(!ValidatorUtil.isMobile(mobile)){
-            return Result.error(CodeMsg.MOBILE_ERROR);
-        }
         //登录
-        CodeMsg codeMsg = miaoShaUserService.login(loginVo);
-        if(codeMsg.getCode()==0){
-            return Result.success(true);
-        }else{
-            return Result.error(codeMsg);
-        }
+        miaoShaUserService.login(response,loginVo);
+        return Result.success(true);
     }
 
 }
