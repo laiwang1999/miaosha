@@ -169,10 +169,9 @@ public class RedisService {
      *
      * @param prefix 前缀
      * @param key    键
-     * @param <T>    无意义
      * @return 返回原子减一后的结果
      */
-    public <T> Long decr(KeyPrefix prefix, String key) {
+    public Long decr(KeyPrefix prefix, String key) {
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
