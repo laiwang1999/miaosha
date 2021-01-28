@@ -62,26 +62,41 @@ public class MiaoShaUserService {
             throw new GlobalException(CodeMsg.MOBILE_ERROR);
         }
         //生成cookie
+        addCookie(miaoshaUser,response);
+        return true;
+    }
+
+    /**
+     * 生成Cookie
+     * @param user MiaoshaUser对象
+     * @param response HttpServletResponse对象
+     */
+    private void addCookie(MiaoshaUser user,HttpServletResponse response){
+        //生成cookie
         String token = UUIDUtil.uuid();
-        redisService.set(MiaoshaUserKey.token, token, miaoshaUser);
+        redisService.set(MiaoshaUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         //cookie的有效期
         cookie.setMaxAge(MiaoshaUserKey.token.expireSeconds());
         cookie.setPath("/");
         response.addCookie(cookie);
-        return true;
     }
-
     /**
      * 得到token从redis缓存中得到用户
      *
      * @param token 用户表示
      * @return 返回一个从redis中得到的对象
      */
-    public MiaoshaUser getByToken(String token) {
+    public MiaoshaUser getByToken(String token,HttpServletResponse response) {
         if (StringUtils.isNullOrEmpty(token)) {
             return null;
         }
-        return redisService.get(MiaoshaUserKey.token, token, MiaoshaUser.class);
+        MiaoshaUser miaoshaUser = redisService.get(MiaoshaUserKey.token, token, MiaoshaUser.class);
+        //延长有效期
+        if(miaoshaUser!=null){
+            addCookie(miaoshaUser,response);
+        }
+
+        return miaoshaUser;
     }
 }

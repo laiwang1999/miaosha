@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MiaoshaUserDao {
     @Select("select * from miaosha_user where id = #{id}")
-    public MiaoshaUser getById(@Param("id") Long id);
+    MiaoshaUser getById(@Param("id") Long id);
 }

@@ -11,30 +11,35 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
     @Autowired
     MiaoShaUserService miaoShaUserService;
+
     /**
-     *
-     * @param model 用于向页面传值
+     * @param response 响应返回对象
+     * @param model       用于向页面传值
      * @param cookieToken 电脑端从Cookie中拿取token
-     * @param paramToken 为了兼容手机端，手机与电脑存放token的地方可能不同，手机端从参数获取token
+     * @param paramToken  为了兼容手机端，手机与电脑存放token的地方可能不同，手机端从参数获取token
      * @return 返回商品页面
      */
     @RequestMapping("/to_list")
-    public String toList(Model model,
-                         @CookieValue(value = MiaoShaUserService.COOKIE_NAME_TOKEN, required = false) String cookieToken,
-                         @RequestParam(value = MiaoShaUserService.COOKIE_NAME_TOKEN, required = false) String paramToken) {
+    public String toList(//HttpServletResponse response,
+                         Model model,
+                         //@CookieValue(value = MiaoShaUserService.COOKIE_NAME_TOKEN, required = false) String cookieToken,
+                         //@RequestParam(value = MiaoShaUserService.COOKIE_NAME_TOKEN, required = false) String paramToken,
+                         MiaoshaUser user) {
         //如果没有获取到token,直接返回登录页面
-        if (StringUtils.isNullOrEmpty(cookieToken) && StringUtils.isNullOrEmpty(paramToken)) {
-            return "login";
-        }
-        //拿到token
-        String token = StringUtils.isNullOrEmpty(paramToken) ? cookieToken : paramToken;
-        MiaoshaUser user = miaoShaUserService.getByToken(token);
-        model.addAttribute("user",user);
+//        if (StringUtils.isNullOrEmpty(cookieToken) && StringUtils.isNullOrEmpty(paramToken)) {
+//            return "login";
+//        }
+//        //拿到token
+//        String token = StringUtils.isNullOrEmpty(paramToken) ? cookieToken : paramToken;
+//        MiaoshaUser user = miaoShaUserService.getByToken(token, response);
+        model.addAttribute("user", user);
         return "goods_list";
     }
 }
