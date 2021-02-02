@@ -10,7 +10,8 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   datasource:
-    url: jdbc:mysql://localhost:3306/miaosha?serverTimezone=Asia/Shanghai&characterEncoding=utf-8
+    # 时区设置为UTC时间，与Java对应
+    url: jdbc:mysql://localhost:3306/miaosha?serverTimezone=UTC&characterEncoding=utf-8
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -36,8 +37,8 @@ mybatis:
     default-fetch-size: 100
     default-statement-timeout: 3000
   mapper-locations: classpath:/mapper/*.xml
-# redis
-redis:  # redis配置
+# redis,RedisConfig读取
+redis:
   host: 116.62.121.124
   port: 6379
   timeout: 3

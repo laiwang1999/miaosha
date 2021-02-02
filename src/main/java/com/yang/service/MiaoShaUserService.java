@@ -29,6 +29,7 @@ public class MiaoShaUserService {
 
     /**
      * 通过id得到对象
+     *
      * @param id 秒杀用户的id
      * @return 返回一个秒杀用户对象
      */
@@ -62,18 +63,20 @@ public class MiaoShaUserService {
             throw new GlobalException(CodeMsg.MOBILE_ERROR);
         }
         //生成cookie
-        addCookie(miaoshaUser,response);
+        String token = UUIDUtil.uuid();
+        addCookie(miaoshaUser, token, response);
         return true;
     }
 
     /**
      * 生成Cookie
-     * @param user MiaoshaUser对象
+     *
+     * @param user     MiaoshaUser对象
      * @param response HttpServletResponse对象
+     * @param token    token
      */
-    private void addCookie(MiaoshaUser user,HttpServletResponse response){
+    private void addCookie(MiaoshaUser user, String token, HttpServletResponse response) {
         //生成cookie
-        String token = UUIDUtil.uuid();
         redisService.set(MiaoshaUserKey.token, token, user);
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
         //cookie的有效期
@@ -81,20 +84,21 @@ public class MiaoShaUserService {
         cookie.setPath("/");
         response.addCookie(cookie);
     }
+
     /**
      * 得到token从redis缓存中得到用户
      *
      * @param token 用户表示
      * @return 返回一个从redis中得到的对象
      */
-    public MiaoshaUser getByToken(String token,HttpServletResponse response) {
+    public MiaoshaUser getByToken(String token, HttpServletResponse response) {
         if (StringUtils.isNullOrEmpty(token)) {
             return null;
         }
         MiaoshaUser miaoshaUser = redisService.get(MiaoshaUserKey.token, token, MiaoshaUser.class);
         //延长有效期
-        if(miaoshaUser!=null){
-            addCookie(miaoshaUser,response);
+        if (miaoshaUser != null) {
+            addCookie(miaoshaUser, token, response);
         }
 
         return miaoshaUser;

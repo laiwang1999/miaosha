@@ -1,19 +1,13 @@
 package com.yang.pojo;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class CodeMsg {
     private int code;
     private String msg;
     //通用异常
     public static CodeMsg SUCCESS = new CodeMsg(0, "success");
     public static CodeMsg SERVER_ERROR = new CodeMsg(500100, "服务端异常");
-    public static CodeMsg BIND_ERROR = new CodeMsg(500101,"参数校验异常: %s");
+    public static CodeMsg BIND_ERROR = new CodeMsg(500101, "参数校验异常: %s");
     //登录模块 5002XX
     public static CodeMsg SESSION_ERROR = new CodeMsg(500210, "Session不存在或已失效");
     //密码为空
@@ -31,9 +25,25 @@ public class CodeMsg {
     //订单模块 5004XX
 
     //秒杀模块 5005XX
-    public CodeMsg fillArgs(Object...args){
+    public static CodeMsg MIAOSHA_OVER = new CodeMsg(500500, "商品已经秒杀完毕");
+    public static CodeMsg REPEAT_MIAOSHA = new CodeMsg(500501, "不能重复秒杀");
+
+    public CodeMsg fillArgs(Object... args) {
         int code = this.code;
-        String message = String.format(this.msg,args);
-        return new CodeMsg(code,message);
+        String message = String.format(this.msg, args);
+        return new CodeMsg(code, message);
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public CodeMsg(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
     }
 }
