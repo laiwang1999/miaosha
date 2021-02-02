@@ -1,6 +1,8 @@
 package com.yang.pojo;
 
-
+/**
+ * 异常信息
+ */
 public class CodeMsg {
     private int code;
     private String msg;

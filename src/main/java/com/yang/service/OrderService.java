@@ -21,9 +21,9 @@ public class OrderService {
 
     /**
      * 创建订单：
-     * @param user
-     * @param goods
-     * @return
+     * @param user 秒杀用户的详细信息
+     * @param goods 秒杀商品信息
+     * @return 返回该用户秒杀后的订单信息
      */
     @Transactional
     public OrderInfo createOrder(MiaoshaUser user, GoodsVo goods) {

@@ -1,20 +1,15 @@
 package com.yang.controller;
 
-import com.mysql.cj.util.StringUtils;
 import com.yang.pojo.MiaoshaUser;
-import com.yang.pojo.User;
 import com.yang.service.GoodsService;
 import com.yang.service.MiaoShaUserService;
 import com.yang.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -29,7 +24,7 @@ public class GoodsController {
     /**
      * 通过WebMvcConfiguration简化了参数,详情见WebConfig
      *
-     * @param model       用于向页面传值
+     * @param model 用于向页面传值
      * @return 返回商品页面
      */
     @RequestMapping("/to_list")
@@ -63,8 +58,8 @@ public class GoodsController {
         long endAt = goods.getEndDate().getTime();
         //当前时间
         long now = System.currentTimeMillis();
-        System.out.println(startAt+" "+endAt+" "+now);
-        model.addAttribute("goods",goods);
+        System.out.println(startAt + " " + endAt + " " + now);
+        model.addAttribute("goods", goods);
         //秒杀状态
         int miaoshaStatus = 0;
         //距离秒杀开始还剩多长时间
@@ -79,8 +74,8 @@ public class GoodsController {
             miaoshaStatus = 1;
             remainSeconds = 0;
         }
-        model.addAttribute("miaoshaStatus",miaoshaStatus);
-        model.addAttribute("remainSeconds",remainSeconds);
+        model.addAttribute("miaoshaStatus", miaoshaStatus);
+        model.addAttribute("remainSeconds", remainSeconds);
         return "goods_detail";
     }
 }

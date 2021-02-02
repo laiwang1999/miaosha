@@ -1,6 +1,5 @@
 package com.yang.dao;
 
-import com.yang.pojo.Goods;
 import com.yang.pojo.MiaoshaGoods;
 import com.yang.vo.GoodsVo;
 import org.apache.ibatis.annotations.Mapper;
