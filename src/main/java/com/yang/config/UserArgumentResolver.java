@@ -22,7 +22,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     /**
      * @param methodParameter 通过methodParameter获取
-     * @return
+     * @return 返回一个boolean类型
      */
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
@@ -67,6 +67,9 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
      */
     private String getCookieValue(HttpServletRequest request, String cookieNameToken) {
         Cookie[] cookies = request.getCookies();
+        if(cookies==null || cookies.length<=0){
+            return null;
+        }
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(cookieNameToken)) {
                 return cookie.getValue();

@@ -30,8 +30,16 @@ public class MiaoshaController {
     @Autowired
     MiaoshaService miaoshaService;
 
+    /**
+     * 秒杀
+     *
+     * @param model   向前端传值
+     * @param user    秒杀用户的详细信息
+     * @param goodsId 商品ID
+     * @return 秒杀完成后返回订单详情页
+     */
     @RequestMapping("/do_miaosha")
-    public String list(Model model,
+    public String miaosha(Model model,
                        MiaoshaUser user,
                        @RequestParam("goodsId") long goodsId) {
         model.addAttribute("user", user);

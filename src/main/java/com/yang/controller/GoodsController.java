@@ -58,7 +58,6 @@ public class GoodsController {
         long endAt = goods.getEndDate().getTime();
         //当前时间
         long now = System.currentTimeMillis();
-        System.out.println(startAt + " " + endAt + " " + now);
         model.addAttribute("goods", goods);
         //秒杀状态
         int miaoshaStatus = 0;
